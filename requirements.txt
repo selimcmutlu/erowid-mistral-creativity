@@ -1,0 +1,21 @@
+torch==2.14.1
+transformers==5.18.0
+peft==0.21.1
+accelerate==1.15.0
+datasets==5.0.1
+huggingface_hub==1.33.0
+safetensors==0.8.0
+tokenizers==0.23.2
+sentence-transformers==6.1.0
+nltk==3.10.3
+numpy==2.5.3
+pandas==3.0.6
+scipy==1.18.1
+statsmodels==0.15.0
+matplotlib==3.11.2
+seaborn==0.13.2
+RapidFuzz==3.14.6
+ipykernel
+nbconvert
+# CUDA / Colab only (4-bit QLoRA path):
+# bitsandbytes

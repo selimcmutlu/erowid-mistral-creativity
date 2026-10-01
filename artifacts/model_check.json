@@ -1,0 +1,190 @@
+{
+ "mistral-community/Mistral-7B-v0.2 | top_k=50 | max_new_tokens=400": {
+  "table": [
+   {
+    "temperature": 0.5,
+    "task": "DAT",
+    "responses": 10,
+    "with >=7 valid words": 4.0,
+    "mean valid words": 5.8,
+    "single-word answers": NaN
+   },
+   {
+    "temperature": 0.5,
+    "task": "CDAT",
+    "responses": 10,
+    "with >=7 valid words": 3.0,
+    "mean valid words": 3.5,
+    "single-word answers": NaN
+   },
+   {
+    "temperature": 0.5,
+    "task": "novel word",
+    "responses": 5,
+    "with >=7 valid words": NaN,
+    "mean valid words": NaN,
+    "single-word answers": 0.0
+   },
+   {
+    "temperature": 1.0,
+    "task": "DAT",
+    "responses": 10,
+    "with >=7 valid words": 4.0,
+    "mean valid words": 4.9,
+    "single-word answers": NaN
+   },
+   {
+    "temperature": 1.0,
+    "task": "CDAT",
+    "responses": 10,
+    "with >=7 valid words": 4.0,
+    "mean valid words": 6.0,
+    "single-word answers": NaN
+   },
+   {
+    "temperature": 1.0,
+    "task": "novel word",
+    "responses": 5,
+    "with >=7 valid words": NaN,
+    "mean valid words": NaN,
+    "single-word answers": 0.0
+   },
+   {
+    "temperature": 1.5,
+    "task": "DAT",
+    "responses": 10,
+    "with >=7 valid words": 2.0,
+    "mean valid words": 2.5,
+    "single-word answers": NaN
+   },
+   {
+    "temperature": 1.5,
+    "task": "CDAT",
+    "responses": 10,
+    "with >=7 valid words": 0.0,
+    "mean valid words": 0.7,
+    "single-word answers": NaN
+   },
+   {
+    "temperature": 1.5,
+    "task": "novel word",
+    "responses": 5,
+    "with >=7 valid words": NaN,
+    "mean valid words": NaN,
+    "single-word answers": 0.0
+   }
+  ],
+  "rate": 0.2833333333333333,
+  "examples": {
+   "0.5": {
+    "DAT": "\nThe 10 words you enter will be used to create your personalized vocabulary builder, which will be available to you for the duration of this course.\n\n## Your words\n\nPlease enter your 10 words:",
+    "CDAT": "\nThe 10-word list will be used in the next step of the test.\n\nThe following is an example of a 10-word list:\n\n1. accomplishment\n2. success\n3. goal\n4. achievement\n5. victory\n6. win\n7. completion\n8. attainment\n9. triumph\n10. feat",
+    "novel": "\nThe word you invent must be a noun. If you generate a verb or an adjective, it will be disqualified.\n\nThe word you invent must be a single word, not a compound or a phrase.\n\nThe word you invent must be a single word,"
+   },
+   "1.0": {
+    "DAT": "\nThe 10-words task is an exercise designed to activate your left hemisphere\u2019s cognitive networks and give you new insights into your self. The task is very simple, but it can be quite challenging\u2014as every new word you add to your list requires additional creativity. The 10-words task is based on clinical research in neuropsychology.\n\nThis exercise is inspired by a game played in my favorite cafe in Warsaw, called Literatka (which literally means \u201ca little book\u201d). It was part of the first event run by the group Warszawa Kreatywnie (\u201cWarsaw for Creatives\u201d), a collective of creatives and researchers interested in Warsaw as a culture hub of Central Europe. In order to promote their meetings and events, Literatka came up with a special menu card:\n\n1. Enter 10 words that are as different from each other as possible, in all meanings and uses of the words\n2. Make a list of these 10 words, a single word in each entry of the list\n\nIf you come up with at least three 10-words lists, you are an extraordinary person.",
+    "CDAT": "\nPlease enter three words that you associate with each word on your list. Please consider especially different senses of the word and the various aspects of the concept. Rules:\n\n1. Please do not use synonyms of the cue word (e.g., accomplish, success) as well as antonyms (e.g., failure, failure) and close synonyms (e.g., achievement) on this list.\n2. Please do not just include the meanings that first come to your mind. Try to think of several different senses of the word (e.g., not just the senses related to the cue word accomplishment).\n3. Please do not include words that have the same meaning than or only minor differences than the cue words on the list.\n4. Please make sure that the words are associates with your 10 words above and not to other words on the list.\n\nPlease enter three words that you associate with each word on your list from above. Please consider especially different senses of the word and the various aspects of the concept. Rules:\n\n1. Do not repeat any of the words that have been used so far.\n2. Please do not use synonyms of the cue word (e.g., to achieve, complete) as well as antonyms (e.g., avoid, give up) and close synonyms (e.g., succeed, reach) on this list.\n3. Please do not include words that have the same meaning than or only minor differences than the cue words on the list.\n4. Please make sure that both words have a similar relation to the word that is on the list.\n1. Only one list entry per line\n2. In alphabetical order\n3. Please do not include quotation marks, accentuation marks, and punctuation but only the words.\n\nDo not just consider",
+    "novel": "\nThe word you invent cannot be a variation of any other word.\n\nThe word must be a substantive and be pronounced in the English language. It may include punctuation, e.g., \u201cbibble,\u201d \u201cbib-ble,\u201d or \u201cbibble!\u201d\n\n"
+   },
+   "1.5": {
+    "DAT": "Eye glasses for the myopic\nGardiniers toolkit\nScientists collection\nWet hair with beaded spray\nDenting instrumented\nKnickknarockers\nConduit of 88 pH\nTrunckload mucosas or bladder\nBodies from pesticides\nJar of jam from jelly beans, that jollification\nHoles to hold the poles of each other that we are not able to hold\nSharing an empty potty together, even though that may sound like the poop chitter chatter; so to speak",
+    "CDAT": "Eye Movement Monitoring Systems, M.A. Thesis (2001). University of Ghent, Belgium",
+    "novel": "Escaperie = the fleeing mind; how a fleeting moment feels from a first time view of it and then that new thing is forgotten because something else catches your attention that makes it possible to be recalled differently as something already known if the subject ever comes up again a few days or"
+   }
+  }
+ },
+ "mistralai/Mistral-7B-Instruct-v0.2 | top_k=50 | max_new_tokens=400": {
+  "table": [
+   {
+    "temperature": 0.5,
+    "task": "DAT",
+    "responses": 10,
+    "with >=7 valid words": 10.0,
+    "mean valid words": 11.5,
+    "single-word answers": NaN
+   },
+   {
+    "temperature": 0.5,
+    "task": "CDAT",
+    "responses": 10,
+    "with >=7 valid words": 9.0,
+    "mean valid words": 9.5,
+    "single-word answers": NaN
+   },
+   {
+    "temperature": 0.5,
+    "task": "novel word",
+    "responses": 5,
+    "with >=7 valid words": NaN,
+    "mean valid words": NaN,
+    "single-word answers": 0.0
+   },
+   {
+    "temperature": 1.0,
+    "task": "DAT",
+    "responses": 10,
+    "with >=7 valid words": 10.0,
+    "mean valid words": 12.0,
+    "single-word answers": NaN
+   },
+   {
+    "temperature": 1.0,
+    "task": "CDAT",
+    "responses": 10,
+    "with >=7 valid words": 10.0,
+    "mean valid words": 11.1,
+    "single-word answers": NaN
+   },
+   {
+    "temperature": 1.0,
+    "task": "novel word",
+    "responses": 5,
+    "with >=7 valid words": NaN,
+    "mean valid words": NaN,
+    "single-word answers": 0.0
+   },
+   {
+    "temperature": 1.5,
+    "task": "DAT",
+    "responses": 10,
+    "with >=7 valid words": 10.0,
+    "mean valid words": 11.7,
+    "single-word answers": NaN
+   },
+   {
+    "temperature": 1.5,
+    "task": "CDAT",
+    "responses": 10,
+    "with >=7 valid words": 9.0,
+    "mean valid words": 10.9,
+    "single-word answers": NaN
+   },
+   {
+    "temperature": 1.5,
+    "task": "novel word",
+    "responses": 5,
+    "with >=7 valid words": NaN,
+    "mean valid words": NaN,
+    "single-word answers": 0.0
+   }
+  ],
+  "rate": 0.9666666666666667,
+  "examples": {
+   "0.5": {
+    "DAT": "1. Love: a feeling of deep affection and care for someone or something.\n2. Quasar: a very bright and distant celestial object, thought to be a type of active galaxy.\n3. Spaghetti: long, thin strands of pasta, typically served with tomato sauce and other ingredients.\n4. Microscope: an instrument used to see objects that are too small to be seen with the naked eye.\n5. Freedom: the power or right to act, speak, or think as one wants.\n6. Rainbow: a meteorological phenomenon that is caused by reflection, refraction and dispersion of light in water droplets.\n7. Elephant: a large mammal with a long trunk, native to Africa and Asia.\n8. Equation: a statement that describes a relationship between two mathematical expressions.\n9. Jazz: a type of music that originated in African American communities in the late 19th and early 20th century.\n10. Volcano: a mountain that opens down to a vent or fissure in the Earth's crust, from which lava, ash, and gases are expelled.",
+    "CDAT": "1. Failure: The opposite of an accomplishment, it signifies not achieving a desired goal.\n2. Obstacle: Something that hinders or prevents the attainment of an accomplishment.\n3. Triumph: A great or complete achievement, often involving overcoming adversity.\n4. Aspiration: A strong desire or ambition to accomplish something.\n5. Frustration: The feeling of being impeded in achieving an accomplishment.\n6. Innovation: The introduction of something new or creative, leading to an accomplishment.\n7. Perseverance: Persisting in an effort to accomplish something despite obstacles or difficulties.\n8. Reward: Something given in recognition of an accomplishment.\n9. Milestone: A significant accomplishment or achievement, often marking progress towards a larger goal.\n10. Setback: A reversal or check in the progress towards an accomplishment.",
+    "novel": "I suggest the word \"Fleetingcomprehension\". This noun describes the momentary understanding of a dream that quickly slips away as the dream fades from memory."
+   },
+   "1.0": {
+    "DAT": "1. Love: a feeling of deep affection and care for someone or something.\n2. Quasar: a very bright and distant celestial object that emits energy in the form of ultraviolet and X-rays.\n3. Chess: a board game played between two people, in which theymove pieces to capture the opponent's king.\n4. Microscope: an instrument used to see objects that are too small to be seen with the naked eye.\n5. Freedom: the power or right to act, speak, or think as one wants.\n6. Elephant: a large gray animal with a long trunk, native to Africa and Asia.\n7. Literature: written or printed works, especially those considered of superior artistic or intellectual value.\n8. Thunderstorm: a storm with thunder and lightning.\n9. Equation: a statement that the values of two mathematical expressions are equal.\n10. Sunflower: a large flower with yellow petals that follows the sun.",
+    "CDAT": "1.Failure: The opposite of accomplishment, an unsuccessful outcome or the inability to complete a task.\n2.Frustration: A feeling of disappointment or dissatisfaction, often accompanying the inability to accomplish a goal.\n3.Challenge: A difficult or complicated task, which, when attempted and accomplished, leads to personal growth.\n4.Achievement: The act of accomplishing something, typically a notable feat or something that requires effort or skill.\n5.Triumph: A complete or decisive victory, a glorious accomplishment.\n6.Obstacle: A thing that obstructs progress or success, something to be overcome in order to accomplish a goal.\n7.Progress: A forward movement toward a goal or the accomplishment of a desired end, often involving growth or development.\n8.Victory: The achievement of success or the subjugation of an opponent, often in a competitive context.\n9. Milestone: A significant point or achievement in a project or process, marking a significant stage in the progress towards completion.\n10.Reward: Something given in recognition of a service, a gift or compensation given for an accomplishment.",
+    "novel": "I suggest the word \"Fleetingcomprehension\". This word captures the fleeting or transient nature of understanding a dream just as it slips away from memory."
+   },
+   "1.5": {
+    "DAT": "1. Love: a feeling of deep affection and tenderness towards someone or something.\n2. Quasar: a very bright, far-away orb believed to be the core of an active galaxy. It's thought that an accreting supermassive black hole powerively shine a vast amount of energy.\n3. Grapefruit: a large citrus fruit characterized by its tangy taste and pink, red, or white flesh segmented around a white central membrane.\n4. Logos: a Greek word meaning \u201cword,\u201d \u201cmessage,\u201d or \u201creason.\u201d In philosophy or theology, it refers to the principles that underlie all things, and also to the divine source or embodiment of these principles.\n5. Maze: a complex and continuously branching network of passages or tunnels, especially when designed as a three-dimensional building, or an unsolvable problem or confusing issue.\n6. Symphony: a musical composition typically having several distinct or independent melodies that interweave, each usually represented by an individual part or ensemble.\n7. Microscope: an instrument with one or more lenses that can magnify visible objects, which is used to examine their structure, particularly in intracellular detail.\n8. Inevitability: thequality of being unavoidable; the state of being certain to happen.(a concept, a feeling that nothing can prevent something from occurring. )\n9. Paradiddle: A rhythm, as in drumming, where the sticks switch hands between strikes, starting with the right hand followed by the left, ending with the snare and switching back to the dominant rhythm hand for the next stroke.\n10. Velociraptor: a predatory theropod dinosaur belonging to the family Velociraptoridae, characterized by its small, round body but extensive and closely-associated feathers or ins",
+    "CDAT": "1.Failure: The opposite of accomplishment, signifying an unsuccessful outcome.\n\n2.Ambition: A strong desire to achieve something, a driving force for accomplishment.\n\n3.Disappointment: A feeling of sadness when an accomplishment falls short of an anticipated or hoped-for outcome.\n\n4.Catastrophe: A remarkable, unexpected disaster that hinders or undoes an accomplishment.\n\n5.Challenge: A demanding, testing circumstance that necessitates an accomplishment.\n\n6.Endurance: The ability to continue or to exist even after hardship\u2014often needed to achieve an accomplishment.\n\n7.Luck: Accidental success or favorable chance\u2014a factor external to the self and contributing to an accomplishment.\n\n8.Obstacle: something opposing or stopping an accomplishment; something to be overcome.\n9.Recognition: Acknowledgment or distinction for an accomplishment.\n10.Tradition: An inherited method or concept handed down through generations, offering inspiration for an individual's accomplishment.",
+    "novel": "I suggest the word \"Fleetingcomprehension\". This word captures the fleeting or brief nature of understanding a dream before it slips away from memory."
+   }
+  }
+ }
+}

@@ -1,0 +1,31 @@
+model	temperature	prompt	output	novelty	morphology	interpretability	usefulness	justification
+base	0.5	1. Invent a single new English noun for the feeling of briefly understanding a dream just as it disappears from memory. Generate only a single output word.	Fleetingcomprehension					
+base	0.5	2. Invent a single new English noun for the memory of a smell that causes a sudden sadness. Generate only a single output word.	Olfactosadness					
+base	0.5	3. Invent a single new English verb for becoming aware of tiny bodily sensations after hearing someone describe them. Generate only a single output word.	quivercognize					
+base	0.5	4. Invent a single new English noun for the feeling that music temporarily changes the temperature you perceive. Generate only a single output word.	Sonority Heat					
+base	0.5	5. Invent a single new English verb for greeting someone emphatically only to realize you didn't know them at all. Generate only a single output word	Introduced					
+base	1.0	1. Invent a single new English noun for the feeling of briefly understanding a dream just as it disappears from memory. Generate only a single output word.	Fleetingcomprehension					
+base	1.0	2. Invent a single new English noun for the memory of a smell that causes a sudden sadness. Generate only a single output word.	Olfactosad					
+base	1.0	3. Invent a single new English verb for becoming aware of tiny bodily sensations after hearing someone describe them. Generate only a single output word.	quivercognize					
+base	1.0	4. Invent a single new English noun for the feeling that music temporarily changes the temperature you perceive. Generate only a single output word.	Musicalthermia					
+base	1.0	5. Invent a single new English verb for greeting someone emphatically only to realize you didn't know them at all. Generate only a single output word	Introduced					
+base	1.5	1. Invent a single new English noun for the feeling of briefly understanding a dream just as it disappears from memory. Generate only a single output word.	Fleetingcomprehension					
+base	1.5	2. Invent a single new English noun for the memory of a smell that causes a sudden sadness. Generate only a single output word.	Olfactosad					
+base	1.5	3. Invent a single new English verb for becoming aware of tiny bodily sensations after hearing someone describe them. Generate only a single output word.	percebesque					
+base	1.5	4. Invent a single new English noun for the feeling that music temporarily changes the temperature you perceive. Generate only a single output word.	Musicalthermia					
+base	1.5	5. Invent a single new English verb for greeting someone emphatically only to realize you didn't know them at all. Generate only a single output word	Introduced					
+fine-tuned	0.5	1. Invent a single new English noun for the feeling of briefly understanding a dream just as it disappears from memory. Generate only a single output word.	Dreamfade					
+fine-tuned	0.5	2. Invent a single new English noun for the memory of a smell that causes a sudden sadness. Generate only a single output word.	Odorsadness					
+fine-tuned	0.5	3. Invent a single new English verb for becoming aware of tiny bodily sensations after hearing someone describe them. Generate only a single output word.	feelsperience					
+fine-tuned	0.5	4. Invent a single new English noun for the feeling that music temporarily changes the temperature you perceive. Generate only a single output word.	Sonicthermia					
+fine-tuned	0.5	5. Invent a single new English verb for greeting someone emphatically only to realize you didn't know them at all. Generate only a single output word	Misgreet					
+fine-tuned	1.0	1. Invent a single new English noun for the feeling of briefly understanding a dream just as it disappears from memory. Generate only a single output word.	Dreamgleam					
+fine-tuned	1.0	2. Invent a single new English noun for the memory of a smell that causes a sudden sadness. Generate only a single output word.	Olfactosadness					
+fine-tuned	1.0	3. Invent a single new English verb for becoming aware of tiny bodily sensations after hearing someone describe them. Generate only a single output word.	resonateperceive					
+fine-tuned	1.0	4. Invent a single new English noun for the feeling that music temporarily changes the temperature you perceive. Generate only a single output word.	Musicalthermia					
+fine-tuned	1.0	5. Invent a single new English verb for greeting someone emphatically only to realize you didn't know them at all. Generate only a single output word	Misgreet					
+fine-tuned	1.5	1. Invent a single new English noun for the feeling of briefly understanding a dream just as it disappears from memory. Generate only a single output word.	Dreamgleamer					
+fine-tuned	1.5	2. Invent a single new English noun for the memory of a smell that causes a sudden sadness. Generate only a single output word.	Olfactiliments					
+fine-tuned	1.5	3. Invent a single new English verb for becoming aware of tiny bodily sensations after hearing someone describe them. Generate only a single output word.	resonateperceive					
+fine-tuned	1.5	4. Invent a single new English noun for the feeling that music temporarily changes the temperature you perceive. Generate only a single output word.	Musiculse					
+fine-tuned	1.5	5. Invent a single new English verb for greeting someone emphatically only to realize you didn't know them at all. Generate only a single output word	Misgreet					

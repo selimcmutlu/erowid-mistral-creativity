@@ -1,0 +1,131 @@
+- base model:
+	In the report? Partly. "Mistral 7B v0.2" is named; base vs. Instruct is not stated.
+	Your choice: First tested the base checkpoint (mistral-community/Mistral-7B-v0.2) with the exact evaluation prompts. Only 28% of its 60 DAT/CDAT probe responses had ≥7 valid words: it continued the prompt (forms, essays) instead of answering. It fails, so we replaced it with mistralai/Mistral-7B-Instruct-v0.2 (97% on the same probe), which we fine-tuned and evaluated.
+	Why this choice? A name without "Instruct" denotes the base model. The assignment asks to replace a model that fails with the closest one that succeeds: Instruct-v0.2 has the same architecture, size and release, plus instruction tuning. The failure criterion was fixed in advance: <50% scorable probe responses.
+	Potential impact: Instruction tuning, not our fine-tuning, makes the model follow the DAT/CDAT format and shapes its baseline creativity (aligned models favour appropriateness). A base-model pipeline would yield mostly unscorable answers, so its results are not comparable.
+
+
+- Input corpus:
+	In the report? Partly. The Erowid experience vaults (18,204 experiences; text, author, drug, date, weight, dose chart) are named; no version is given.
+	Your choice: The course-provided copy (erowid-main/Experiences, 40,514 JSON files). The 12 malformed files are skipped and duplicates removed by exp_id. Each "text" fragment is a paragraph: paragraphs are joined with blank lines, and the scraping marker "End Body" closing 7,522 reports is removed.
+	Why this choice? This is the corpus given as the report's. A first run that joined paragraphs with spaces taught the model to write without line breaks (lists on one line). "End Body" is a scraper artefact, not text the authors wrote.
+	Potential impact: This copy is larger and newer than the report's 18,204 experiences, so the drug mix, style and size of the training set probably differ. Text layout (paragraphs, markers) is learned and resurfaces in generations.
+
+
+- filtering criteria
+	In the report? Partly. The five most common drugs are listed (Cannabis, LSD, MDMA, Mushrooms, Salvia divinorum); how labels were matched is not stated.
+	Your choice: Decode HTML entities, drop combination reports (label contains "&"), and merge label variants under their base substance (e.g. "MDMA (Ecstasy)", "Mushrooms - P. cubensis", "Salvia divinorum (10x extract)"). Result: 7,533 reports (Mushrooms 1,998; Salvia 1,728; Cannabis 1,356; LSD 1,325; MDMA 1,126).
+	Why this choice? With exact labels DMT ties MDMA (700 each) and Salvia ranks 6th, contradicting the report; merging variants reproduces the reported top five. Combinations are excluded because the report blames mixed-drug labels for unrealistic narratives.
+	Potential impact: Exact labels only would give 5,024 reports; including combinations would add many polydrug narratives. Both change data size and how well the prompt's drug matches the text.
+
+
+- train/test split:
+	In the report? No.
+	Your choice: Random 95/5 split with seed 111: 7,156 training and 377 validation reports. Validation is used only to compare held-out loss before and after fine-tuning; no early stopping or model selection.
+	Why this choice? Without ground truth, held-out loss is a cheap check that the model learned the domain rather than memorising it (2.478 → 2.305 on the experience text). Holding out 5% barely reduces training data.
+	Potential impact: The original probably trained on all data. Using 5% less data should hardly change the model; a different split changes which reports are learned.
+
+
+- Dependencies:
+	In the report? Partly. Python and the Hugging Face transformers, datasets and peft libraries are named; no versions.
+	Your choice: Colab (A100-80GB, Python 3.13, torch 2.11.0+cu128) with transformers 5.18.0, peft 0.21.1, datasets 5.0.1, accelerate 1.15.0, sentence-transformers 6.1.0, nltk 3.10.3 (data bundled), statsmodels 0.15.0. Colab's preinstalled torchao 0.10 is removed. Pinned in requirements.txt and the notebook preamble.
+	Why this choice? Same libraries as the report, in current versions. Pinning makes the run repeatable. torchao is uninstalled because peft 0.21 refuses to add LoRA layers next to that version; NLTK data is bundled because NLTK refuses downloads through Colab's proxy.
+	Potential impact: Defaults change across versions (optimizer, LoRA initialisation, tokenizer special tokens), which can change training numerics and generations. Unpinned installs may fail outright, as torchao showed.
+
+
+- random seed:
+	In the report? No.
+	Your choice: 111 for everything: data split, data order (seed and data_seed), LoRA initialisation, sampling (re-seeded for every task × model × temperature block) and random baselines.
+	Why this choice? Required by the assignment. Re-seeding each block keeps every condition reproducible on its own: all 315 base-model outputs (DAT, CDAT, novel words) were identical across two separate Colab runs.
+	Potential impact: Another seed changes data order, adapter initialisation and every sampled output. Means over 50 samples should move little; individual lists and invented words would differ.
+
+
+- handling of missing values:
+	In the report? Yes. Missing dose-chart information is replaced with question marks.
+	Your choice: Every missing dose-chart field becomes "?", including the substance; an empty dose chart gives "took ? ? of ? ? in ? form". Erowid's own codes in the data ("?" for unknown amounts, "rep" for repeated doses) are kept as they are. No report had empty text. Weight, author and date are unused.
+	Why this choice? This follows the report literally. Keeping Erowid's codes avoids inventing doses. Fields the report does not mention for the prompt are left out.
+	Potential impact: 43% of prompts contain at least one "?", so the dose conditioning is weak or noisy (e.g. "took rep rep of Cannabis"). Imputing or normalising doses would strengthen the drug/dose–text association.
+
+
+- prompt format:
+	In the report? Partly. One example prompt is given ("The following is a drug experience of someone who took 1.5 g of Mushrooms oral in plant materia form…"); the separator, multi-dose format and loss target are not.
+	Your choice: "The following is a drug experience of someone who took {amount} {units} of {substance} {method} in {form} form", with multiple dose rows joined by ", … and". Example = prompt + ".\n" + report + </s>, with the loss on the report only (prompt masked). Evaluation uses Nakajima et al.'s prompts verbatim in the model's chat template.
+	Why this choice? This reproduces the report's field order. With the loss on the prompt, the identical opening made the model put 98% probability on "The" at text start, and it leaked into answers ("The The The…"). The report calls the string a prompt to generate from.
+	Potential impact: Training on the prompt template distorts generation, as observed. Training on plain text but evaluating in chat format may limit how much fine-tuning transfers to the creativity prompts.
+
+
+- tokenizer settings:
+	In the report? No.
+	Your choice: The model's own tokenizer, with BOS added, EOS appended, right truncation at 512 tokens and pad = <unk>. Prompt tokens are masked via character offsets of the full-string tokenisation. Right padding for training (label padding -100), left padding for batched generation.
+	Why this choice? Mistral has no pad token, and padding with EOS would mask the real EOS labels. Offsets keep the tokenisation identical to tokenising the whole string, avoiding boundary artefacts. Decoder-only batched generation needs left padding.
+	Potential impact: Padding and EOS handling decide whether the model learns where reports end. Truncation side decides which part of each report is learned.
+
+
+- fine tuning configuration:
+	In the report? Partly. LoRA via peft, with Hugging Face defaults or hardware-driven settings and no tuning.
+	Your choice: Plain LoRA on frozen bf16 weights (adapter in fp32) on a Colab A100-80GB, with causal-LM loss on the report text. HF Trainer: AdamW (adamw_torch), linear schedule, no warm-up, weight decay 0, gradient clipping 1.0, evaluation each epoch, checkpoints every 25 steps; 27 minutes. 4-bit QLoRA is used only on GPUs under 40 GB.
+	Why this choice? The report says defaults and plain LoRA. An 80 GB GPU needs no quantization, so bf16 avoids an unreported deviation; an earlier 4-bit run behaved similarly but adds quantisation noise.
+	Potential impact: Quantising the base model, putting the loss on the prompt (seen in an earlier run) or using another optimizer changes the training signal, and with it how strongly the model adopts the Erowid style.
+
+
+- maximum sequence length:
+	In the report? No.
+	Your choice: 512 tokens. 81% of examples are truncated (mean length 479 tokens); 93% of tokens carry the loss.
+	Why this choice? The report adjusted parameters to its hardware. 512 was fixed when planning for a 36 GB laptop (about 13 h for 2 epochs) and kept on Colab for comparability across runs.
+	Potential impact: The model learns mostly report openings (background, dosing, onset) and rarely peaks or endings. Longer contexts would change the learned style and narrative structure.
+
+
+- LoRA rank, alpha, dropout, target modules:
+	In the report? Partly. The target modules are given (query, key, value and output projections); rank, alpha and dropout are not.
+	Your choice: r=8, alpha=32, dropout=0.1, no bias; targets q_proj, k_proj, v_proj, o_proj (6.8M trainable parameters, 0.094% of the model).
+	Why this choice? The report took parameters from Hugging Face defaults and documentation. These are the PEFT documentation's causal-LM example values.
+	Potential impact: Higher rank or alpha means stronger adaptation and more drift from the base model (larger effects on DAT/CDAT/novel words, more risk of degeneration); lower means weaker.
+
+
+- learning rate:
+	In the report? No.
+	Your choice: 5e-5 with linear decay to 0 and no warm-up.
+	Why this choice? This is the Hugging Face Trainer default, and the report says no tuning was done and HF defaults were used.
+	Potential impact: 5e-5 is conservative for LoRA (2e-4 is common), so adaptation is mild. That keeps fine-tuning effects on the creativity tasks small (DAT −1 to −1.4 points); a higher rate would likely enlarge them.
+
+
+- batch size and gradient accumulation:
+	In the report? Partly. The batch size is 16; accumulation is not mentioned.
+	Your choice: Effective batch 16 = micro-batch 4 × 4 accumulation steps on the A100 (1 × 16 on the 36 GB laptop and on small GPUs). No gradient checkpointing. 896 optimizer steps.
+	Why this choice? This keeps the reported batch size while fitting memory. A laptop benchmark showed micro-batch 1 without checkpointing was fastest there; the A100 fits 4.
+	Potential impact: The update is essentially equivalent to a true batch of 16. Padding within micro-batches and per-micro-batch loss averaging change numerics slightly; the effect on results should be minor.
+
+
+- number of epochs:
+	In the report? Yes. 2 epochs.
+	Your choice: 2 epochs (896 optimizer steps). Validation loss on the report text: 2.478 before, 2.311 after epoch 1, 2.305 after epoch 2.
+	Why this choice? Taken from the report.
+	Potential impact: More epochs fit the narrative style more strongly (risking overfitting and loss of instruction following); fewer weaken the fine-tuning effect.
+
+
+- decoding settings:
+	In the report? No. The report gives none; the assignment fixes the temperatures.
+	Your choice: Sampling at exactly T = 0.5, 1.0 and 1.5, with Hugging Face's default top-k 50, top-p 1.0 and no repetition penalty. max_new_tokens is 400 for lists, 60 for invented words and 60 for the demo. Each prompt is an independent sequence (batches of 50, left padding). Sensitivity check: the same prompts and seeds with untruncated sampling (top-k off).
+	Why this choice? Library defaults match the report's approach and Nakajima's open-model setting (top-k 50). Untruncated sampling at T=1.5 made 84–92% of lists degenerate, leaving the condition unscorable. 400 tokens fit ten items with definitions.
+	Potential impact: Truncation interacts with temperature. Without top-k, T=1.5 yields noise (2–10% scorable); with it, 92% are scorable. Conclusions about "high temperature" therefore depend on this unreported choice.
+
+
+- stopping criteria:
+	In the report? No.
+	Your choice: Training stops after a fixed 2 epochs, with no early stopping. Generation stops at EOS or max_new_tokens.
+	Why this choice? The report fixes the number of epochs, not a stopping rule. EOS is the model's own end-of-answer signal, and the token limits are generous for the requested outputs.
+	Potential impact: Here validation loss still fell slightly in epoch 2 (2.311 → 2.305), so early stopping would keep the same model; with more epochs it could matter. A 200-token limit (first run) truncated verbose answers and dropped valid lists.
+
+
+- Additional evaluation decisions (not part of the original pipeline):
+	SBERT checkpoint: all-MiniLM-L6-v2, the default in Nakajima et al.'s released code (the paper names none).
+	Validity filter: list entries are split by line, inline numbering or commas; numbering, markdown and glosses after "-"/":"/"(" are removed. Valid = a single alphabetic word in WordNet or the NLTK word list, tagged NN/NNS or with a WordNet noun synset, and not proper-only (all WordNet spellings capitalised). Lemmatised and deduplicated; first 7 kept; responses with <7 are dropped and counted.
+	CDAT gate: model-level Welch t-test against a random-noun baseline (BH-FDR, α=0.001, higher mean). Per row, "passed gate" also needs 7 valid words and appropriateness above that cue's 95th-percentile random value. CDAT score = novelty of passing rows.
+	Base vs fine-tuned: the same network with the LoRA adapter disabled or enabled, identical prompts and seeds.
+	Novel words: the invented word is extracted from sentence answers (quoted word, "Word:" pattern, short line); scores are given by the group members.
+
+
+- Run history (how we checked that the results can be trusted):
+	Run 1 (4-bit QLoRA, untruncated sampling, 200 tokens): T=1.5 gave no scorable DAT lists, the fine-tuned model's lists were cut at 200 tokens, and novel words were mis-extracted. We fixed the decoding defaults, token limits and the extractor, and verified them on the real model.
+	Run 2 (bf16, loss on the full string): the fine-tuned model looped "The The The…" (30–40% of DAT lists lost). A probe showed P("The" | text start) = 0.976 (base 0.001). We masked the prompt, kept paragraphs and removed "End Body".
+	Run 3 (reported): leak check 0.0007 (base 0.0006), no degeneration, 92–100% of lists scorable. The base outputs are identical to run 2.

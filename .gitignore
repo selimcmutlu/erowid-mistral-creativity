@@ -1,0 +1,17 @@
+# data that cannot be redistributed
+erowid_experiences.zip
+corpus used to fine-tune models in the original report/
+nltk_data.zip
+nltk_data/
+
+# environments and caches
+.venv/
+venv/
+__pycache__/
+.ipynb_checkpoints/
+.DS_Store
+
+# training checkpoints (the final adapter is in artifacts/finetuned_adapter)
+artifacts/checkpoints/
+artifacts/train_data.json
+artifacts_smoke/
